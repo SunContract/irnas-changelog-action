@@ -126,6 +126,20 @@ def test_release_promotes_unreleased_and_leaves_release_notes_empty(
     assert updated == STANDARD_RELEASED_CHANGELOG
 
 
+def test_release_defaults_to_changelog_md_when_action_input_is_empty(
+    run_changelog_action: RunChangelogAction,
+) -> None:
+    """An empty changelogPath Action input uses the default CHANGELOG.md file."""
+    updated, release_notes, _, _ = run_changelog_action(
+        STANDARD_CHANGELOG,
+        INPUT_TAG="v1.1.0",
+        INPUT_DATE="2024-02-03",
+        INPUT_CHANGELOGPATH="",
+    )
+    assert release_notes == ""
+    assert updated == STANDARD_RELEASED_CHANGELOG
+
+
 def test_first_release_leaves_release_notes_empty(
     run_changelog_action: RunChangelogAction,
 ) -> None:

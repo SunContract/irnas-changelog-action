@@ -95,8 +95,11 @@ def _tag_and_version(args: argparse.Namespace) -> tuple[str, str]:
 
 
 def _changelog_path(args: argparse.Namespace) -> Path:
-    if args.github_action and "INPUT_CHANGELOGPATH" in os.environ:
-        return Path(os.environ["INPUT_CHANGELOGPATH"])
+    changelog_path = (
+        os.environ.get("INPUT_CHANGELOGPATH") if args.github_action else None
+    )
+    if changelog_path:
+        return Path(changelog_path)
     return args.changelog_path
 
 
