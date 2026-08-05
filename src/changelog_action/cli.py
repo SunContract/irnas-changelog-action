@@ -105,7 +105,8 @@ def _changelog_path(args: argparse.Namespace) -> Path:
 
 def _genesis_hash() -> str:
     return subprocess.check_output(
-        ["git", "rev-list", "--max-parents=0", "HEAD"], text=True
+        ["git", "-c", "safe.directory=*", "rev-list", "--max-parents=0", "HEAD"],
+        text=True,
     ).splitlines()[0]
 
 

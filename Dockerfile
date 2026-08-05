@@ -1,5 +1,7 @@
 FROM python:3.12-alpine
 
+RUN apk add --no-cache git
+
 WORKDIR /action
 COPY pyproject.toml README.md ./
 COPY src ./src
