@@ -1,0 +1,30 @@
+[project]
+name = "irnas-changelog-action"
+dynamic = ["version"]
+description = "Promote the Unreleased section of a Keep a Changelog file."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "IRNAS" }]
+dependencies = []
+
+[project.scripts]
+irnas-changelog-action = "changelog_action.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["setuptools>=69", "setuptools-scm[simple]>=8"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

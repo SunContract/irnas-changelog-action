@@ -1,0 +1,29 @@
+name: IRNAS Changelog Action
+description: Automatically update a Keep a Changelog file for a new release.
+author: IRNAS
+branding:
+  icon: list
+  color: white
+inputs:
+  operation:
+    description: "release (default) promotes Unreleased; extract reads release notes without modifying the changelog."
+    required: false
+    default: release
+  version:
+    description: The release version. Deprecated for release operations; use tag instead.
+    required: false
+  tag:
+    description: The tag that contains the version of the new release.
+    required: false
+  date:
+    description: The release date in ISO 8601 format. Defaults to today.
+    required: false
+  changelogPath:
+    description: The path to the changelog file.
+    required: false
+outputs:
+  release-notes:
+    description: The release notes for extract operations; empty for release operations.
+runs:
+  using: docker
+  image: Dockerfile

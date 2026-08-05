@@ -25,8 +25,9 @@ jobs:
 
       - name: Get latest Changelog entry
         id: changelog-reader
-        uses: mindsers/changelog-reader-action@v2.2.3
+        uses: ./
         with:
+          operation: extract
           version: ${{ env.release_version_cut }}
 
       - name: Prepare assets
@@ -52,4 +53,4 @@ jobs:
           body: |
             # Release notes
 
-            ${{ steps.changelog-reader.outputs.changes }}
+            ${{ steps.changelog-reader.outputs.release-notes }}

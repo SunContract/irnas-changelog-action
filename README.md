@@ -1,63 +1,61 @@
-# Irnas's Projects template
+# IRNAS Changelog Action
 
-IRNAS template for a GitHub repository. It comes with a
-[basic group](https://github.com/IRNAS/irnas-workflows-software/tree/main/workflow-templates/basic)
-of CI workflows for release automation.
+Promote the `Unreleased` section of a [Keep a Changelog](https://keepachangelog.com/) file into a
+new release. The tool adds a fresh empty `Unreleased` section, updates GitHub comparison links, and
+leaves the `release-notes` output empty.
 
-## Checklist
+The action can also extract release notes for existing versions without modifying the changelog.
 
-### General GitHub setup
+## Command Line
 
-- [ ] Provide a concise and accurate description of your project in the GitHub "description" field.
-- [ ] Provide a concise and accurate description of your project in this `README.md` file, replace
-      the default title.
-- [ ] Ensure that your project follows [repository naming scheme].
-- [ ] Add a project logo to the `README.md` file. The logo should be placed in the `doc/images`
-      folder. Use the following syntax to include it:
+Use [uv](https://docs.astral.sh/uv/) to run it locally:
 
-  ```markdown
-  ![Project Logo](doc/images/logo.svg)
-  ```
+```shell
+uv run irnas-changelog-action \
+  --tag v1.2.3 \
+  --repository owner/repository
+```
 
-[repository naming scheme]:
-  https://github.com/IRNAS/irnas-guidelines-docs/blob/main/docs/github_projects_guidelines.md#repository-naming-scheme-
+The command updates `CHANGELOG.md` in place. The release date defaults to today, and `--version` is
+supported for compatibility, though `--tag` is preferred.
 
-### Tooling
+Extract release notes without modifying the changelog:
 
-- [ ] Turn on `pre-commit` tool by running `pre-commit install`. If you do not have it yet **or the
-      command did not succeed** follow our [instructions].
+```shell
+uv run irnas-changelog-action extract --version 1.2.3
+```
 
-[instructions]: https://github.com/IRNAS/irnas-guidelines-docs/tree/main/tools/pre-commit
+## GitHub Action
 
-### Non-software projects
+Use the repository action directly:
 
-- [ ] If needed re-read [GitHub for non-software projects] section. It describes what files should
-      be committed to the repository and what files should be added to the release assets.
-- [ ] Create `assets` folder with files that will be part of the next release. The files in this
-      folder will be automatically compressed into a zip file and attached to the release assets
-      during the release process. The files should be added to the `assets` folder before creating
-      the first release. This step is **optional**, it depends on the type of your project.
+```yaml
+- uses: IRNAS/irnas-changelog-action@main
+  id: changelog
+  with:
+    tag: v1.2.3
+```
 
-[GitHub for non-software projects]:
-  https://github.com/IRNAS/irnas-guidelines-docs/blob/main/docs/github_projects_guidelines.md#github-for-non-software-projects-
+The action uses `GITHUB_REPOSITORY` for comparison links and defaults to `CHANGELOG.md` when
+`changelogPath` is not set. Its `release-notes` output is empty for this operation. It only modifies
+the changelog; it does not commit or push changes.
 
-### Cleanup
+Extract notes for an existing release without modifying the file:
 
-- [ ] If you don't want to use `pre-commit` tool delete the following files:
-  - `.markdownlint.yaml`
-  - `.pre-commit-config.yaml`
-  - `.prettierrc.yaml`
-  - `committed.toml`
-  - `ruff.toml`
-  - `typos.toml`
-  - `.github/workflows/pre-commit.yaml`
-- [ ] As a final step delete this checklist and commit changes.
+```yaml
+- uses: IRNAS/irnas-changelog-action@main
+  id: release_notes
+  with:
+    operation: extract
+    version: 1.2.3
 
-## Repository folder structure
+- run: printf '%s\n' '${{ steps.release_notes.outputs.release-notes }}'
+```
 
-- `docs/` - Project and development documentation.
-- `docs/images/` - Images used in the documentation, such as diagrams, screenshots, or logos.
-- `assets/` - Files that will be part of the next release process.
-- `CHANGELOG.md` - Document used for tracking changes in the project. It follows the
-  [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
-- `.github` - GitHub Actions workflows and other GitHub related files.
+## Development
+
+```shell
+uv sync --all-groups
+uv run pytest
+uv run ruff check .
+```
