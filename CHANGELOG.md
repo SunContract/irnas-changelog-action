@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-26
+
 No changes in this release, rebuilt release for fork.
 
 ## [1.0.0] - 2026-08-05
@@ -16,6 +18,7 @@ No changes in this release, rebuilt release for fork.
 - Release-note extraction for existing changelog versions.
 - Support for GitHub Enterprise comparison URLs.
 
-[Unreleased]: https://github.com/IRNAS/irnas-changelog-action/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/SunContract/irnas-changelog-action/compare/v1.0.1...HEAD
 
+[1.0.1]: https://github.com/SunContract/irnas-changelog-action/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/IRNAS/irnas-changelog-action/compare/1a06e3785162d2bc4c0d2f20c56b92460c577f8b...v1.0.0
