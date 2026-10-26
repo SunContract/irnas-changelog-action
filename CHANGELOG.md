@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+No changes in this release, rebuilt release for fork.
+
 ## [1.0.0] - 2026-08-05
 
 ### Added
